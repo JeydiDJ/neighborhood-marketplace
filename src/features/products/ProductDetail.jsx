@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../auth/useAuth';
 import { fetchProductById } from './useProducts';
+import { addToCart } from '../cart/useCart';
 
 export default function ProductDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { user } = useAuth();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
+  const [cartMsg, setCartMsg] = useState('');
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
 
   useEffect(() => {
     let ignore = false;
@@ -40,6 +44,36 @@ export default function ProductDetail() {
 
   const isOwner = user && product && user.id === product.seller_id;
 
+  const handleAddToCart = async () => {
+    setErrorMsg('');
+    setCartMsg('');
+
+    if (!user) {
+      navigate('/login', { replace: true });
+      return;
+    }
+
+    if (isOwner) {
+      setErrorMsg('You cannot add your own listing to your cart.');
+      return;
+    }
+
+    setIsAddingToCart(true);
+
+    try {
+      await addToCart({
+        userId: user.id,
+        productId: product.id,
+        sellerId: product.seller_id,
+      });
+      setCartMsg('Added to cart.');
+    } catch (error) {
+      setErrorMsg(error.message || 'Unable to add this listing to your cart right now.');
+    } finally {
+      setIsAddingToCart(false);
+    }
+  };
+
   return (
     <section className="mx-auto max-w-5xl px-4 py-10">
       {loading && <p className="text-gray-600">Loading product...</p>}
@@ -70,14 +104,33 @@ export default function ProductDetail() {
               <p>Seller: {product.seller?.full_name || 'Unknown seller'}</p>
               <p>Posted: {new Date(product.created_at).toLocaleDateString()}</p>
             </div>
-            {isOwner && (
+            {cartMsg && <p className="mt-6 text-sm font-medium text-emerald-700">{cartMsg}</p>}
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              {!isOwner && (
+                <button
+                  type="button"
+                  onClick={handleAddToCart}
+                  disabled={isAddingToCart}
+                  className="inline-flex items-center justify-center rounded-full bg-emerald-600 px-5 py-3 font-semibold text-white hover:bg-emerald-700 disabled:opacity-70"
+                >
+                  {isAddingToCart ? 'Adding...' : 'Add to cart'}
+                </button>
+              )}
+              {isOwner && (
+                <Link
+                  to={`/products/edit/${product.id}`}
+                  className="inline-flex items-center justify-center rounded-full bg-gray-900 px-5 py-3 font-semibold text-white hover:bg-gray-700"
+                >
+                  Edit listing
+                </Link>
+              )}
               <Link
-                to={`/products/edit/${product.id}`}
-                className="mt-8 inline-flex rounded bg-gray-900 px-4 py-2 font-semibold text-white hover:bg-gray-700"
+                to="/products"
+                className="inline-flex items-center justify-center rounded-full border border-gray-300 bg-white px-5 py-3 font-semibold text-gray-900 hover:border-gray-400"
               >
-                Edit listing
+                Back to products
               </Link>
-            )}
+            </div>
           </div>
         </div>
       )}

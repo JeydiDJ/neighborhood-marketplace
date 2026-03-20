@@ -1,12 +1,43 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../features/auth/useAuth';
+import { fetchCartCount } from '../../features/cart/useCart';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+
+  React.useEffect(() => {
+    let ignore = false;
+
+    const loadCartCount = async () => {
+      if (!user?.id) {
+        setCartCount(0);
+        return;
+      }
+
+      try {
+        const count = await fetchCartCount(user.id);
+
+        if (!ignore) {
+          setCartCount(count);
+        }
+      } catch {
+        if (!ignore) {
+          setCartCount(0);
+        }
+      }
+    };
+
+    loadCartCount();
+
+    return () => {
+      ignore = true;
+    };
+  }, [user]);
 
   const handleLogout = async () => {
     setErrorMsg('');
@@ -45,7 +76,7 @@ export default function Navbar() {
             {user ? (
               <>
                 <Link to="/cart" className="rounded-full px-3 py-2 text-sm font-medium text-gray-700 hover:bg-orange-50 hover:text-orange-700">
-                  Cart
+                  Cart{cartCount > 0 ? ` (${cartCount})` : ''}
                 </Link>
                 <Link to="/profile" className="rounded-full px-3 py-2 text-sm font-medium text-gray-700 hover:bg-orange-50 hover:text-orange-700">
                   Profile
@@ -80,7 +111,7 @@ export default function Navbar() {
           {user ? (
             <>
               <Link to="/cart" className="rounded-2xl px-4 py-3 text-sm font-medium text-gray-700 hover:bg-orange-50" onClick={() => setMenuOpen(false)}>
-                Cart
+                Cart{cartCount > 0 ? ` (${cartCount})` : ''}
               </Link>
               <Link to="/profile" className="rounded-2xl px-4 py-3 text-sm font-medium text-gray-700 hover:bg-orange-50" onClick={() => setMenuOpen(false)}>
                 Profile
