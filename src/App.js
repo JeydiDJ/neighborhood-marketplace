@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import { supabase } from './api/supabaseClient'; // Supabase client
+import { supabase, supabaseConfigError } from './api/supabaseClient'; // Supabase client
 
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
@@ -28,6 +28,10 @@ import EditProfile from './features/profile/EditProfile';
 function App() {
   // Quick Supabase connection test
   useEffect(() => {
+    if (!supabase) {
+      return;
+    }
+
     const testConnection = async () => {
       try {
         const { data } = await supabase.auth.getSession();
@@ -38,6 +42,29 @@ function App() {
     };
     testConnection();
   }, []);
+
+  if (supabaseConfigError) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[linear-gradient(180deg,_#fff7ed_0%,_#f9fafb_100%)] px-4">
+        <div className="max-w-2xl rounded-[2rem] bg-white p-8 shadow-sm">
+          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-orange-600">Configuration needed</p>
+          <h1 className="mt-3 text-3xl font-bold text-gray-900">Supabase environment variables are missing</h1>
+          <p className="mt-4 text-gray-600">
+            This app needs your Supabase URL and anon key at build/runtime. In Vercel, add
+            {' '}
+            <code className="rounded bg-gray-100 px-2 py-1 text-sm">REACT_APP_SUPABASE_URL</code>
+            {' '}
+            and
+            {' '}
+            <code className="rounded bg-gray-100 px-2 py-1 text-sm">REACT_APP_SUPABASE_ANON_KEY</code>
+            {' '}
+            in Project Settings - Environment Variables, then redeploy.
+          </p>
+          <p className="mt-4 text-sm text-red-600">{supabaseConfigError}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <AuthProvider>
