@@ -2,9 +2,20 @@ import { supabase } from '../../api/supabaseClient';
 
 const PRODUCT_IMAGES_BUCKET = 'product-images';
 
+function normalizeCategory(category) {
+  if (!category) {
+    return null;
+  }
+
+  return {
+    ...category,
+    name: category.name ?? category.title ?? category.label ?? 'Uncategorized',
+  };
+}
+
 function attachRelatedData(products, profiles, categories) {
   const profilesById = new Map(profiles.map(profile => [profile.id, profile]));
-  const categoriesById = new Map(categories.map(category => [category.id, category]));
+  const categoriesById = new Map(categories.map(category => [category.id, normalizeCategory(category)]));
 
   return products.map(product => ({
     ...product,
@@ -14,13 +25,15 @@ function attachRelatedData(products, profiles, categories) {
 }
 
 export async function fetchCategories() {
-  const { data, error } = await supabase.from('categories').select('id, name').order('name');
+  const { data, error } = await supabase.from('categories').select('*');
 
   if (error) {
     throw error;
   }
 
-  return data ?? [];
+  return (data ?? [])
+    .map(normalizeCategory)
+    .sort((a, b) => (a?.name || '').localeCompare(b?.name || ''));
 }
 
 export async function fetchProducts(options = {}) {
@@ -63,14 +76,14 @@ export async function fetchProducts(options = {}) {
   if (categoryIds.length > 0) {
     const { data: categoryData, error: categoriesError } = await supabase
       .from('categories')
-      .select('id, name')
+      .select('*')
       .in('id', categoryIds);
 
     if (categoriesError) {
       throw categoriesError;
     }
 
-    categories = categoryData ?? [];
+    categories = (categoryData ?? []).map(normalizeCategory);
   }
 
   return attachRelatedData(data ?? [], profiles, categories);
@@ -107,7 +120,7 @@ export async function fetchProductById(id) {
   if (data?.category_id) {
     const { data: categoryData, error: categoryError } = await supabase
       .from('categories')
-      .select('id, name')
+      .select('*')
       .eq('id', data.category_id)
       .maybeSingle();
 
@@ -115,7 +128,7 @@ export async function fetchProductById(id) {
       throw categoryError;
     }
 
-    category = categoryData ?? null;
+    category = normalizeCategory(categoryData);
   }
 
   return {

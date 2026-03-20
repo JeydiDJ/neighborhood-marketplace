@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function ProductCard({ product }) {
   return (
-    <article className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+    <article className="animate-fade-up overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg">
       <div className="aspect-[4/3] bg-gradient-to-br from-amber-100 via-orange-50 to-rose-100">
         {product.image_url ? (
           <img src={product.image_url} alt={product.name} className="h-full w-full object-cover" />

@@ -42,7 +42,7 @@ export default function Home() {
     <main>
       <section className="overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(251,191,36,0.35),_transparent_30%),linear-gradient(135deg,_#fff7ed,_#ffffff_45%,_#fef3c7)]">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div>
+          <div className="animate-fade-up">
             <p className="text-sm font-semibold uppercase tracking-[0.25em] text-orange-600">Neighborhood Marketplace</p>
             <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
               Buy, sell, and discover useful things right around the corner
@@ -66,19 +66,19 @@ export default function Home() {
             </div>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-3xl bg-white p-6 shadow-sm">
+            <div className="animate-fade-up-delayed rounded-3xl bg-white p-6 shadow-sm">
               <p className="text-sm uppercase tracking-[0.2em] text-gray-500">Recent Activity</p>
               <p className="mt-4 text-4xl font-bold text-gray-900">{loading ? '...' : products.length}</p>
               <p className="mt-2 text-sm text-gray-600">Fresh listings featured on the home page.</p>
             </div>
-            <div className="rounded-3xl bg-gray-900 p-6 text-white shadow-sm">
+            <div className="animate-fade-up-delayed rounded-3xl bg-gray-900 p-6 text-white shadow-sm">
               <p className="text-sm uppercase tracking-[0.2em] text-orange-300">Easy Selling</p>
               <p className="mt-4 text-2xl font-bold">List an item in minutes</p>
               <p className="mt-2 text-sm leading-6 text-gray-300">
                 Add a photo, set your price, and let nearby buyers find you.
               </p>
             </div>
-            <div className="rounded-3xl bg-orange-500 p-6 text-white shadow-sm sm:col-span-2">
+            <div className="animate-fade-up-delayed rounded-3xl bg-orange-500 p-6 text-white shadow-sm sm:col-span-2">
               <p className="text-sm uppercase tracking-[0.2em] text-orange-100">Why local works</p>
               <p className="mt-3 text-2xl font-bold">Less shipping, faster pickup, better trust.</p>
               <p className="mt-2 max-w-2xl text-sm leading-6 text-orange-50">
@@ -90,7 +90,7 @@ export default function Home() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-14">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div className="animate-fade-up flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">Latest Listings</p>
             <h2 className="mt-2 text-3xl font-bold text-gray-900">Fresh from your neighborhood</h2>

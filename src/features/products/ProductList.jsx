@@ -47,7 +47,7 @@ export default function ProductList() {
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-10">
-      <div className="rounded-3xl bg-gradient-to-br from-orange-100 via-amber-50 to-white px-6 py-10 shadow-sm sm:px-10">
+      <div className="animate-fade-up rounded-3xl bg-gradient-to-br from-orange-100 via-amber-50 to-white px-6 py-10 shadow-sm sm:px-10">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-orange-600">Browse Listings</p>
@@ -73,7 +73,7 @@ export default function ProductList() {
       {errorMsg && <p className="mt-8 text-red-500">{errorMsg}</p>}
 
       {!loading && !errorMsg && categories.length > 0 && (
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className="animate-fade-up mt-8 flex flex-wrap gap-3">
           <button
             type="button"
             onClick={() => setSelectedCategoryId('')}

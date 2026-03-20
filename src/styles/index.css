@@ -7,6 +7,14 @@ body {
   padding: 0;
 }
 
+#root {
+  min-height: 100vh;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 /* Links */
 a {
   @apply text-blue-500 hover:text-blue-700;
@@ -21,6 +29,42 @@ h1, h2, h3, h4, h5, h6 {
 /* Buttons (global override if needed) */
 button {
   @apply cursor-pointer;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-down {
+    from {
+      opacity: 0;
+      transform: translateY(-16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-up {
+    animation: fade-up 0.55s ease-out both;
+  }
+
+  .animate-fade-up-delayed {
+    animation: fade-up 0.75s ease-out both;
+  }
+
+  .animate-fade-down {
+    animation: fade-down 0.4s ease-out both;
+  }
 }
 
 /* Utility overrides or custom classes can be added here */
