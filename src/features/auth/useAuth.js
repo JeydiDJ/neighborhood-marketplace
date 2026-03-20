@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../../api/supabaseClient';
 
 const AuthContext = createContext(null);
@@ -36,12 +36,16 @@ export function AuthProvider({ children }) {
     };
   }, []);
 
-  const signup = async (email, password) => {
+  const signup = async ({ email, password, fullName, avatarUrl = '' }) => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         emailRedirectTo: window.location.origin,
+        data: {
+          full_name: fullName,
+          avatar_url: avatarUrl,
+        },
       },
     });
 
@@ -92,18 +96,15 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const value = useMemo(
-    () => ({
-      user,
-      loading,
-      signup,
-      login,
-      sendPasswordReset,
-      updatePassword,
-      logout,
-    }),
-    [user, loading]
-  );
+  const value = {
+    user,
+    loading,
+    signup,
+    login,
+    sendPasswordReset,
+    updatePassword,
+    logout,
+  };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

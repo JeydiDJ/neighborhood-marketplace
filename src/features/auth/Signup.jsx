@@ -3,6 +3,7 @@ import { useAuth } from './useAuth';
 import { useNavigate, Link, Navigate } from 'react-router-dom';
 
 export default function Signup() {
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -17,6 +18,11 @@ export default function Signup() {
     setErrorMsg('');
     setSuccessMsg('');
 
+    if (!fullName.trim()) {
+      setErrorMsg('Full name is required.');
+      return;
+    }
+
     if (password.length < 6) {
       setErrorMsg('Password must be at least 6 characters long.');
       return;
@@ -30,7 +36,11 @@ export default function Signup() {
     setIsSubmitting(true);
 
     try {
-      const data = await signup(email, password);
+      const data = await signup({
+        fullName: fullName.trim(),
+        email: email.trim(),
+        password,
+      });
       const message = data.session
         ? 'Account created successfully. You are now signed in.'
         : 'Account created. Check your email for the confirmation link before logging in.';
@@ -61,6 +71,14 @@ export default function Signup() {
         <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
         {errorMsg && <p className="text-red-500 mb-4">{errorMsg}</p>}
         {successMsg && <p className="text-green-600 mb-4">{successMsg}</p>}
+        <input
+          type="text"
+          placeholder="Full name"
+          value={fullName}
+          onChange={e => setFullName(e.target.value)}
+          className="w-full mb-4 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+          required
+        />
         <input
           type="email"
           placeholder="Email"
