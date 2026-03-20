@@ -1,70 +1,135 @@
-# Getting Started with Create React App
+# NearBuy
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+NearBuy is a mobile-first neighborhood marketplace built with React and Supabase. It helps people buy and sell locally, chat with sellers, manage listings, and keep everything lightweight and community-focused.
 
-## Available Scripts
+## What NearBuy Does
 
-In the project directory, you can run:
+- Browse local product listings with category filters and search
+- Create, edit, and manage your own listings
+- Upload product images with Supabase Storage
+- Sign up, log in, reset passwords, and manage seller profiles
+- Add listings to cart
+- Message sellers in-app through conversation threads
+- Browse a responsive UI designed for both mobile and desktop
+
+## Tech Stack
+
+- React
+- React Router
+- Supabase Auth
+- Supabase Database
+- Supabase Storage
+- Supabase Realtime
+- Tailwind CSS
+- Create React App
+
+## Local Development
+
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Configure environment variables
+
+Create a `.env` file in the project root and add:
+
+```env
+REACT_APP_SUPABASE_URL=your_supabase_project_url
+REACT_APP_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+### 3. Start the app
+
+```bash
+npm start
+```
+
+The app runs in development mode and opens at [http://localhost:3001](http://localhost:3001).
+
+## Build for Production
+
+```bash
+npm run build
+```
+
+This creates an optimized production build in the `build` folder.
+
+## Project Scripts
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Runs the app locally in development mode.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Builds the app for production.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### `npm test`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Runs the test runner.
 
-### `npm run eject`
+## Supabase Requirements
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+NearBuy expects a Supabase project with:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- `users`
+- `products`
+- `categories`
+- `cart_items`
+- `conversations`
+- `messages`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+It also expects a public Storage bucket:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- `product-images`
 
-## Learn More
+You should also have proper RLS policies in place for:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- auth/profile access
+- products
+- cart items
+- conversations
+- messages
+- storage objects
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Deployment
 
-### Code Splitting
+NearBuy can be deployed to Vercel.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Important notes:
 
-### Analyzing the Bundle Size
+- Add `REACT_APP_SUPABASE_URL` and `REACT_APP_SUPABASE_ANON_KEY` in Vercel environment variables
+- Redeploy after changing environment variables
+- Use the current `vercel.json` so static files are served correctly and client-side routes still work
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Current Features
 
-### Making a Progressive Web App
+- Marketplace landing page with featured/latest listings
+- Product list with category filter and search
+- Product detail page with add-to-cart and message-seller actions
+- Product creation with category selection and image upload
+- Cart page with quantity controls
+- Realtime-style messaging UI with inbox and conversation threads
+- Profile view and edit flow
+- NearBuy branding with responsive navigation and footer
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Future Improvements
 
-### Advanced Configuration
+- Shipping and available quantity support
+- Unread message badges
+- Checkout and order flow
+- Better seller dashboards
+- Saved/favorite listings
+- Image upload for profile avatars
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Screens and Branding
 
-### Deployment
+The app branding uses the NearBuy logo located at:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+`src/assets/site-brand/nearbuy-logo.png`
 
-### `npm run build` fails to minify
+## Notes
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project started from Create React App, but the README has been updated to reflect the actual product and workflow instead of the default CRA template.
