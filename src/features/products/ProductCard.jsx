@@ -33,12 +33,12 @@ export default function ProductCard({ product }) {
         <p className="mt-3 min-h-[3rem] text-sm leading-6 text-gray-600">
           {product.description || 'No description provided.'}
         </p>
-        <div className="mt-5 flex items-center justify-between gap-4">
-          <p className="text-sm text-gray-500">
+        <div className="mt-5 flex items-center justify-between gap-3">
+          <p className="min-w-0 text-sm text-gray-500">
             Seller: {product.seller?.full_name || 'Unknown seller'}
           </p>
           <Link
-            className="inline-flex rounded-full bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-700"
+            className="inline-flex shrink-0 items-center rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-gray-800 transition hover:border-gray-300 hover:bg-gray-50"
             to={`/products/${product.id}`}
           >
             View listing

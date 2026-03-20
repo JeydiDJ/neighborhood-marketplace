@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../auth/useAuth';
 import { fetchProductById } from './useProducts';
 import { addToCart } from '../cart/useCart';
+import { getOrCreateConversation } from '../messages/useMessages';
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -13,6 +14,7 @@ export default function ProductDetail() {
   const [errorMsg, setErrorMsg] = useState('');
   const [cartMsg, setCartMsg] = useState('');
   const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [isMessagingSeller, setIsMessagingSeller] = useState(false);
 
   useEffect(() => {
     let ignore = false;
@@ -74,6 +76,37 @@ export default function ProductDetail() {
     }
   };
 
+  const handleMessageSeller = async () => {
+    setErrorMsg('');
+    setCartMsg('');
+
+    if (!user) {
+      navigate('/login', { replace: true });
+      return;
+    }
+
+    if (isOwner) {
+      setErrorMsg('You cannot message yourself about your own listing.');
+      return;
+    }
+
+    setIsMessagingSeller(true);
+
+    try {
+      const conversation = await getOrCreateConversation({
+        buyerId: user.id,
+        sellerId: product.seller_id,
+        productId: product.id,
+      });
+
+      navigate(`/messages/${conversation.id}`);
+    } catch (error) {
+      setErrorMsg(error.message || 'Unable to open a conversation right now.');
+    } finally {
+      setIsMessagingSeller(false);
+    }
+  };
+
   return (
     <section className="mx-auto max-w-5xl px-4 py-10">
       {loading && <p className="text-gray-600">Loading product...</p>}
@@ -105,28 +138,38 @@ export default function ProductDetail() {
               <p>Posted: {new Date(product.created_at).toLocaleDateString()}</p>
             </div>
             {cartMsg && <p className="mt-6 text-sm font-medium text-emerald-700">{cartMsg}</p>}
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-8 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
               {!isOwner && (
-                <button
-                  type="button"
-                  onClick={handleAddToCart}
-                  disabled={isAddingToCart}
-                  className="inline-flex items-center justify-center rounded-full bg-emerald-600 px-5 py-3 font-semibold text-white hover:bg-emerald-700 disabled:opacity-70"
-                >
-                  {isAddingToCart ? 'Adding...' : 'Add to cart'}
-                </button>
+                <>
+                  <button
+                    type="button"
+                    onClick={handleAddToCart}
+                    disabled={isAddingToCart}
+                    className="inline-flex items-center justify-center rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700 disabled:opacity-70"
+                  >
+                    {isAddingToCart ? 'Adding...' : 'Add to cart'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleMessageSeller}
+                    disabled={isMessagingSeller}
+                    className="inline-flex items-center justify-center rounded-full bg-orange-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-orange-600 disabled:opacity-70"
+                  >
+                    {isMessagingSeller ? 'Opening chat...' : 'Message seller'}
+                  </button>
+                </>
               )}
               {isOwner && (
                 <Link
                   to={`/products/edit/${product.id}`}
-                  className="inline-flex items-center justify-center rounded-full bg-gray-900 px-5 py-3 font-semibold text-white hover:bg-gray-700"
+                  className="inline-flex items-center justify-center rounded-full bg-gray-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-gray-700"
                 >
                   Edit listing
                 </Link>
               )}
               <Link
                 to="/products"
-                className="inline-flex items-center justify-center rounded-full border border-gray-300 bg-white px-5 py-3 font-semibold text-gray-900 hover:border-gray-400"
+                className="inline-flex items-center justify-center rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-900 transition hover:border-gray-400 hover:bg-gray-50"
               >
                 Back to products
               </Link>

@@ -22,6 +22,7 @@ import ProductCreate from './features/products/ProductCreate';
 import ProductEdit from './features/products/ProductEdit';
 
 import Cart from './features/cart/Cart';
+import Messages from './features/messages/Messages';
 import Profile from './features/profile/Profile';
 import EditProfile from './features/profile/EditProfile';
 
@@ -120,6 +121,22 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <EditProfile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/messages"
+                element={
+                  <ProtectedRoute>
+                    <Messages />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/messages/:conversationId"
+                element={
+                  <ProtectedRoute>
+                    <Messages />
                   </ProtectedRoute>
                 }
               />

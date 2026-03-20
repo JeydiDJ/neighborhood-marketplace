@@ -81,6 +81,9 @@ export default function Navbar() {
                 <Link to="/profile" className="rounded-full px-3 py-2 text-sm font-medium text-gray-700 hover:bg-orange-50 hover:text-orange-700">
                   Profile
                 </Link>
+                <Link to="/messages" className="rounded-full px-3 py-2 text-sm font-medium text-gray-700 hover:bg-orange-50 hover:text-orange-700">
+                  Messages
+                </Link>
                 <button
                   type="button"
                   onClick={handleLogout}
@@ -120,6 +123,9 @@ export default function Navbar() {
               </Link>
               <Link to="/profile" className="rounded-2xl px-4 py-3 text-sm font-medium text-gray-700 hover:bg-orange-50" onClick={() => setMenuOpen(false)}>
                 Profile
+              </Link>
+              <Link to="/messages" className="rounded-2xl px-4 py-3 text-sm font-medium text-gray-700 hover:bg-orange-50" onClick={() => setMenuOpen(false)}>
+                Messages
               </Link>
               <button
                 type="button"
