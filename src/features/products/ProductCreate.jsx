@@ -146,7 +146,9 @@ export default function ProductCreate() {
   };
 
   return (
-    <section className="bg-[linear-gradient(180deg,_#fff7ed_0%,_#f9fafb_22%,_#f9fafb_100%)]">
+    <section className="ambient-shell bg-[linear-gradient(180deg,_#fff7ed_0%,_#f9fafb_22%,_#f9fafb_100%)]">
+      <div className="ambient-orb ambient-orb-orange" />
+      <div className="ambient-orb ambient-orb-gold" />
       <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
         <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
           <div className="animate-fade-up rounded-[2rem] bg-gradient-to-br from-orange-500 via-amber-500 to-rose-500 p-6 text-white shadow-lg sm:p-8">

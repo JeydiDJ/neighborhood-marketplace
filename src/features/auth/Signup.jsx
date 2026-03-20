@@ -66,7 +66,9 @@ export default function Signup() {
   }
 
   return (
-    <section className="bg-[linear-gradient(180deg,_#eefbf7_0%,_#f9fafb_30%,_#f9fafb_100%)]">
+    <section className="ambient-shell bg-[linear-gradient(180deg,_#eefbf7_0%,_#f9fafb_30%,_#f9fafb_100%)]">
+      <div className="ambient-orb ambient-orb-emerald" />
+      <div className="ambient-orb ambient-orb-cyan" />
       <div className="mx-auto grid min-h-[calc(100vh-5rem)] max-w-6xl gap-6 px-4 py-8 sm:px-6 sm:py-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
         <div className="animate-fade-up rounded-[2rem] bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-500 p-6 text-white shadow-lg sm:p-8">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-emerald-100">Join the marketplace</p>

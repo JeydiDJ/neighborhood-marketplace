@@ -40,7 +40,10 @@ export default function Home() {
 
   return (
     <main>
-      <section className="overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(251,191,36,0.35),_transparent_30%),linear-gradient(135deg,_#fff7ed,_#ffffff_45%,_#fef3c7)]">
+      <section className="ambient-shell overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(251,191,36,0.35),_transparent_30%),linear-gradient(135deg,_#fff7ed,_#ffffff_45%,_#fef3c7)]">
+        <div className="ambient-orb ambient-orb-orange" />
+        <div className="ambient-orb ambient-orb-rose" />
+        <div className="ambient-orb ambient-orb-gold" />
         <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="animate-fade-up">
             <p className="text-sm font-semibold uppercase tracking-[0.25em] text-orange-600">Neighborhood Marketplace</p>
@@ -89,7 +92,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-14">
+      <section className="ambient-shell mx-auto max-w-6xl px-4 py-14">
         <div className="animate-fade-up flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">Latest Listings</p>

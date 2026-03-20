@@ -101,7 +101,12 @@ export default function Navbar() {
             )}
           </div>
         </div>
-        <div className={`${menuOpen ? 'mt-4 grid' : 'hidden'} gap-2 rounded-3xl border border-gray-200 bg-white p-3 shadow-sm md:hidden`}>
+        <div
+          className={`overflow-hidden transition-all duration-300 ease-out md:hidden ${
+            menuOpen ? 'mt-4 max-h-96 opacity-100' : 'max-h-0 opacity-0'
+          }`}
+        >
+          <div className="animate-soft-pop grid gap-2 rounded-3xl border border-gray-200 bg-white/95 p-3 shadow-sm backdrop-blur">
           <Link to="/" className="rounded-2xl px-4 py-3 text-sm font-medium text-gray-700 hover:bg-orange-50" onClick={() => setMenuOpen(false)}>
             Home
           </Link>
@@ -134,6 +139,7 @@ export default function Navbar() {
               </Link>
             </>
           )}
+        </div>
         </div>
       </div>
       {errorMsg && <p className="mx-auto max-w-7xl px-4 pb-3 text-sm text-red-600 sm:px-6">{errorMsg}</p>}

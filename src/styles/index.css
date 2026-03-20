@@ -31,6 +31,65 @@ button {
   @apply cursor-pointer;
 }
 
+.ambient-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.ambient-shell > *:not(.ambient-orb) {
+  position: relative;
+  z-index: 1;
+}
+
+.ambient-orb {
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+  border-radius: 9999px;
+  filter: blur(40px);
+  opacity: 0.45;
+}
+
+.ambient-orb-orange {
+  top: 5%;
+  left: -4rem;
+  height: 14rem;
+  width: 14rem;
+  background: rgba(251, 146, 60, 0.28);
+}
+
+.ambient-orb-rose {
+  top: 18%;
+  right: -3rem;
+  height: 12rem;
+  width: 12rem;
+  background: rgba(244, 114, 182, 0.2);
+}
+
+.ambient-orb-gold {
+  bottom: 8%;
+  left: 35%;
+  height: 10rem;
+  width: 10rem;
+  background: rgba(250, 204, 21, 0.18);
+}
+
+.ambient-orb-emerald {
+  top: 8%;
+  left: -3rem;
+  height: 14rem;
+  width: 14rem;
+  background: rgba(16, 185, 129, 0.22);
+}
+
+.ambient-orb-cyan {
+  right: -2rem;
+  bottom: 12%;
+  height: 12rem;
+  width: 12rem;
+  background: rgba(34, 211, 238, 0.18);
+}
+
 @media (prefers-reduced-motion: no-preference) {
   @keyframes fade-up {
     from {
@@ -54,6 +113,29 @@ button {
     }
   }
 
+  @keyframes float-orb {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(0.8rem, -0.8rem, 0) scale(1.06);
+    }
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @keyframes soft-pop {
+    from {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
   .animate-fade-up {
     animation: fade-up 0.55s ease-out both;
   }
@@ -64,6 +146,24 @@ button {
 
   .animate-fade-down {
     animation: fade-down 0.4s ease-out both;
+  }
+
+  .animate-soft-pop {
+    animation: soft-pop 0.28s ease-out both;
+    transform-origin: top center;
+  }
+
+  .ambient-orb {
+    animation: float-orb 10s ease-in-out infinite;
+  }
+
+  .ambient-orb-rose,
+  .ambient-orb-cyan {
+    animation-duration: 13s;
+  }
+
+  .ambient-orb-gold {
+    animation-duration: 16s;
   }
 }
 

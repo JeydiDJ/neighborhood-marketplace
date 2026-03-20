@@ -37,7 +37,9 @@ export default function Login() {
   }
 
   return (
-    <section className="bg-[linear-gradient(180deg,_#fffaf5_0%,_#f9fafb_30%,_#f9fafb_100%)]">
+    <section className="ambient-shell bg-[linear-gradient(180deg,_#fffaf5_0%,_#f9fafb_30%,_#f9fafb_100%)]">
+      <div className="ambient-orb ambient-orb-orange" />
+      <div className="ambient-orb ambient-orb-rose" />
       <div className="mx-auto grid min-h-[calc(100vh-5rem)] max-w-6xl gap-6 px-4 py-8 sm:px-6 sm:py-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
         <div className="animate-fade-up rounded-[2rem] bg-gradient-to-br from-orange-500 via-amber-500 to-rose-500 p-6 text-white shadow-lg sm:p-8">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-orange-100">Welcome back</p>
