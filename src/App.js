@@ -11,7 +11,10 @@ import NotFound from './pages/NotFound';
 
 import Login from './features/auth/Login';
 import Signup from './features/auth/Signup';
+import ForgotPassword from './features/auth/ForgotPassword';
+import ResetPassword from './features/auth/ResetPassword';
 import ProtectedRoute from './features/auth/ProtectedRoute';
+import { AuthProvider } from './features/auth/useAuth';
 
 import ProductList from './features/products/ProductList';
 import ProductDetail from './features/products/ProductDetail';
@@ -37,63 +40,67 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/products" element={<ProductList />} />
-        <Route path="/products/:id" element={<ProductDetail />} />
+    <AuthProvider>
+      <Router>
+        <Navbar />
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/products" element={<ProductList />} />
+          <Route path="/products/:id" element={<ProductDetail />} />
 
-        {/* Protected Routes */}
-        <Route
-          path="/products/create"
-          element={
-            <ProtectedRoute>
-              <ProductCreate />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/products/edit/:id"
-          element={
-            <ProtectedRoute>
-              <ProductEdit />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/cart"
-          element={
-            <ProtectedRoute>
-              <Cart />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/profile/edit"
-          element={
-            <ProtectedRoute>
-              <EditProfile />
-            </ProtectedRoute>
-          }
-        />
+          {/* Protected Routes */}
+          <Route
+            path="/products/create"
+            element={
+              <ProtectedRoute>
+                <ProductCreate />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/products/edit/:id"
+            element={
+              <ProtectedRoute>
+                <ProductEdit />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <ProtectedRoute>
+                <Cart />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile/edit"
+            element={
+              <ProtectedRoute>
+                <EditProfile />
+              </ProtectedRoute>
+            }
+          />
 
-        {/* Fallback */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-      <Footer />
-    </Router>
+          {/* Fallback */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        <Footer />
+      </Router>
+    </AuthProvider>
   );
 }
 
