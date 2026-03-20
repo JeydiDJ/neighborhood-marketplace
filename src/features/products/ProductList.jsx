@@ -9,6 +9,7 @@ export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -41,9 +42,25 @@ export default function ProductList() {
     };
   }, []);
 
-  const filteredProducts = selectedCategoryId
-    ? products.filter(product => product.category_id === selectedCategoryId)
-    : products;
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+
+  const filteredProducts = products.filter(product => {
+    const matchesCategory = selectedCategoryId ? product.category_id === selectedCategoryId : true;
+
+    const searchableText = [
+      product.name,
+      product.description,
+      product.seller?.full_name,
+      product.category?.name,
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase();
+
+    const matchesSearch = normalizedSearch ? searchableText.includes(normalizedSearch) : true;
+
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-10">
@@ -71,6 +88,23 @@ export default function ProductList() {
 
       {loading && <p className="mt-8 text-gray-600">Loading products...</p>}
       {errorMsg && <p className="mt-8 text-red-500">{errorMsg}</p>}
+
+      {!loading && !errorMsg && (
+        <div className="animate-fade-up mt-8 rounded-3xl bg-white p-4 shadow-sm sm:p-5">
+          <label className="block">
+            <span className="mb-2 block text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
+              Search listings
+            </span>
+            <input
+              type="search"
+              value={searchTerm}
+              onChange={event => setSearchTerm(event.target.value)}
+              placeholder="Search by product name, description, seller, or category"
+              className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-base focus:border-orange-300 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-200"
+            />
+          </label>
+        </div>
+      )}
 
       {!loading && !errorMsg && categories.length > 0 && (
         <div className="animate-fade-up mt-8 flex flex-wrap gap-3">
@@ -103,7 +137,9 @@ export default function ProductList() {
       {!loading && !errorMsg && filteredProducts.length === 0 && (
         <div className="mt-8 rounded-lg bg-white p-8 text-center shadow-sm">
           <p className="text-gray-600">
-            {products.length === 0 ? 'No products have been listed yet.' : 'No products match that category yet.'}
+            {products.length === 0
+              ? 'No products have been listed yet.'
+              : 'No products match your current search or category filter yet.'}
           </p>
         </div>
       )}

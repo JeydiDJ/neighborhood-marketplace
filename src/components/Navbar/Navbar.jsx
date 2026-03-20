@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../features/auth/useAuth';
 import { fetchCartCount } from '../../features/cart/useCart';
+import nearbuyLogo from '../../assets/site-brand/nearbuy-logo.png';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -55,9 +56,12 @@ export default function Navbar() {
     <nav className="sticky top-0 z-20 border-b border-gray-200 bg-white/95 backdrop-blur animate-fade-down">
       <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6">
         <div className="flex items-center justify-between gap-4">
-          <Link to="/" className="min-w-0" onClick={() => setMenuOpen(false)}>
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-orange-600">Local First</p>
-            <h1 className="truncate text-lg font-bold text-gray-900 sm:text-xl">Neighborhood Marketplace</h1>
+          <Link to="/" className="flex min-w-0 items-center gap-3" onClick={() => setMenuOpen(false)}>
+            <img src={nearbuyLogo} alt="NearBuy" className="h-12 w-12 rounded-2xl object-cover shadow-sm sm:h-14 sm:w-14" />
+            <div className="min-w-0">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-orange-600">NearBuy</p>
+              <h1 className="truncate text-lg font-bold text-gray-900 sm:text-xl">Buy nearby. Sell faster.</h1>
+            </div>
           </Link>
           <button
             type="button"

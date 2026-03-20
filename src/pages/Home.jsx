@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../features/auth/useAuth';
 import ProductCard from '../features/products/ProductCard';
 import { fetchProducts } from '../features/products/useProducts';
+import nearbuyLogo from '../assets/site-brand/nearbuy-logo.png';
 
 export default function Home() {
   const { user } = useAuth();
@@ -46,9 +47,12 @@ export default function Home() {
         <div className="ambient-orb ambient-orb-gold" />
         <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="animate-fade-up">
-            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-orange-600">Neighborhood Marketplace</p>
+            <div className="flex items-center gap-3">
+              <img src={nearbuyLogo} alt="NearBuy" className="h-14 w-14 rounded-2xl object-cover shadow-sm sm:h-16 sm:w-16" />
+              <p className="text-sm font-semibold uppercase tracking-[0.25em] text-orange-600">NearBuy</p>
+            </div>
             <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-              Buy, sell, and discover useful things right around the corner
+              Buy nearby, sell faster, and discover useful things around the corner
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-gray-600">
               Keep listings local, move items faster, and make your marketplace feel like a real part of the community.
